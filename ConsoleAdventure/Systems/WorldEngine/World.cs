@@ -1,0 +1,37 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleAdventure.Systems.WorldEngine
+{
+    public class World
+    {
+        public Chunk[,] Chunks { get; private set; }
+
+        public int Size { get; private set; }
+
+        public int Depth { get; private set; } = 1;
+
+        public int Seed { get; private set; }
+
+        public string Name { get; private set; }
+
+        public World(int size, int seed, string name) 
+        {
+            if (size < 16) throw new ArgumentException("size value cannot be less than 16", nameof(size));
+
+            Size = size / Chunk.Size * Chunk.Size;
+            Seed = seed;
+            Name = name;
+
+            Chunks = new Chunk[Size, Size];
+        }
+
+        //public Transform GetTransform(int x, int y, int layer, int w)
+        //{
+
+        //}
+    }
+}

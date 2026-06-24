@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XnaContent xmlns:Graphics="Microsoft.Xna.Framework.Content.Pipeline.Graphics">
+	<Asset Type="Graphics:FontDescription">
+		<FontName>Consolas</FontName>
+		<Size>12</Size>
+		<Spacing>0</Spacing>
+		<UseKerning>true</UseKerning>
+		<Style>Regular</Style>
+		<CharacterRegions>
+			<!-- Диапазон ASCII символов от 32 (пробел) до 11799 (двойной наклонный дефис) -->
+			<CharacterRegion>
+				<Start>&#32;</Start>
+				<End>&#11799;</End>
+			</CharacterRegion>
+		</CharacterRegions>
+	</Asset>
+</XnaContent>
