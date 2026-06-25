@@ -1,4 +1,9 @@
-﻿using System;
+﻿using ConsoleAdventure.ModLoaderAPI.Loaders;
+using ConsoleAdventure.Systems.WorldEngine;
+using ConsoleAdventure.Systems.WorldEngine.Chunks;
+using ConsoleAdventure.Systems.WorldEngine.Objects;
+using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +13,65 @@ namespace ConsoleAdventure.Graphics
 {
     public static class WorldRenderer
     {
+        private static Point symbolSize = new Point(18, 19);
 
+        public static void Draw()
+        {
+            World world = ConsoleAdventure.World;
+
+            if (world == null) return;
+
+            Point screenSize = ConsoleAdventure.ScreenSize;
+
+            int width = screenSize.X / symbolSize.X;
+            int height = screenSize.Y / symbolSize.Y;
+
+            float offsetX = (screenSize.X - width * symbolSize.X) / 2f;
+            float offsetY = (screenSize.Y - height * symbolSize.Y) / 2f;
+
+            Position startPosition = Position.Zero;
+            int w = 0;
+
+            ConsoleAdventure.SpriteBatch.Begin();
+
+            for (int i = 0; i < width; i++)
+            {
+                for (int j = 0; j < height; j++)
+                {
+                    Position position = startPosition + new Position(i, j);
+
+                    if (position.X < 0 || position.X > world.Size) continue;
+                    if (position.Y < 0 || position.Y > world.Size) continue;
+
+                    Chunk chunk = world.Chunks[position.X / Chunk.Size, position.Y / Chunk.Size];
+
+                    Vector2 drawPosition = new Vector2(i * symbolSize.X + offsetX, j * symbolSize.Y + offsetY);
+
+                    if (chunk is LoadedChunk)
+                    {
+                        Transform? transform = world.GetTransform(position.X, position.Y, 0, w);
+
+                        if (transform?.hasObject == true)
+                        {
+                            BaseTransform baseTransform = TransformLoader.GetTransform(transform.Value.type);
+
+                            if (baseTransform.BackgroundColor.HasValue)
+                            {
+                                ConsoleAdventure.SpriteBatch.DrawString(ConsoleAdventure.Font, "██", drawPosition, baseTransform.BackgroundColor.Value);
+                            }
+
+                            ConsoleAdventure.SpriteBatch.DrawString(ConsoleAdventure.Font, baseTransform.Symbol.Value, drawPosition, baseTransform.Color);
+                        }
+                    }
+
+                    else
+                    {
+                        ConsoleAdventure.SpriteBatch.DrawString(ConsoleAdventure.Font, " ?", drawPosition, Color.Gray);
+                    }
+                }
+            }
+
+            ConsoleAdventure.SpriteBatch.End();
+        }
     }
 }

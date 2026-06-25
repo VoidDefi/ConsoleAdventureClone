@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConsoleAdventure.Systems.WorldEngine.Chunks;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,9 +30,30 @@ namespace ConsoleAdventure.Systems.WorldEngine
             Chunks = new Chunk[Size, Size];
         }
 
-        //public Transform GetTransform(int x, int y, int layer, int w)
-        //{
+        public Transform? GetTransform(int x, int y, int layer, int w)
+        {
+            int chunkX = x / Chunk.Size;
+            int chunkY = y / Chunk.Size;
 
-        //}
+            int chunksSizeX = Chunks.GetLength(0);
+            int chunksSizeY = Chunks.GetLength(1);
+
+            if (chunkX < 0 || chunkY < 0 || chunkX >= chunksSizeX || chunkY >= chunksSizeY)
+                return null;
+
+            Chunk chunk = Chunks[chunkX, chunkY];
+
+            if (chunk != null)
+            {
+                if (chunk is LoadedChunk)
+                {
+                    LoadedChunk loadedChunk = chunk as LoadedChunk;
+
+                    return loadedChunk.GetTransform(x % Chunk.Size, y % Chunk.Size, layer, w);
+                }
+            }
+
+            return null;
+        }
     }
 }

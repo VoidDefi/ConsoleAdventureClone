@@ -18,7 +18,7 @@ namespace ConsoleAdventure.Systems.WorldEngine.Chunks
             int width = world.Chunks.GetLength(0);
             int height = world.Chunks.GetLength(1);
 
-            if (x >= 0 && x < width && y > 0 && y < height)
+            if (x >= 0 && x < width && y >= 0 && y < height)
             {
                 LoadedChunk chunk = new LoadedChunk();
                 world.Chunks[x, y] = chunk;

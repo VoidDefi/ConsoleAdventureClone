@@ -38,5 +38,12 @@ namespace ConsoleAdventure.ModLoaderAPI.Loaders
                 transforms.Add(transform);
             }
         }
+
+        public static BaseTransform GetTransform(int type)
+        {
+            if (type < 0 || type >= Count) return null;
+
+            return transforms[type];
+        }
     }
 }
