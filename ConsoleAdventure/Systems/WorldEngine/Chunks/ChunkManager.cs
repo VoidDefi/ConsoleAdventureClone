@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConsoleAdventure.ModLoaderAPI.Loaders;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,7 +28,7 @@ namespace ConsoleAdventure.Systems.WorldEngine.Chunks
                 {
                     for (int j = 0; j < 16; j++)
                     {
-                        Transform transform = new Transform();
+                        Transform transform = new Transform(0);
                         chunk.SetTransform(i, j, 0, 0, transform);
                     }
                 }

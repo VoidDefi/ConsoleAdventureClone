@@ -15,11 +15,11 @@ namespace ConsoleAdventure.Systems.WorldEngine.Objects
 
         public bool IsObstacle { get; set; }
 
-        public virtual Symbol Symbol => new Symbol(" ?");
+        public virtual Symbol GetSymbol(Position position, int w) => new Symbol(" ?");
 
-        public virtual Color Color => Color.White;
+        public virtual Color GetColor(Position position, int w) => Color.White;
 
-        public virtual Color? BackgroundColor => Color.White;
+        public virtual Color? GetBackgroundColor(Position position, int w) => null;
 
         public virtual void Initialize()
         {

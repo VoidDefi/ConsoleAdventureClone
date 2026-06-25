@@ -26,8 +26,8 @@ namespace ConsoleAdventure.Graphics
             int width = screenSize.X / symbolSize.X;
             int height = screenSize.Y / symbolSize.Y;
 
-            float offsetX = (screenSize.X - width * symbolSize.X) / 2f;
-            float offsetY = (screenSize.Y - height * symbolSize.Y) / 2f;
+            int offsetX = (int)((screenSize.X - width * symbolSize.X) / 2f);
+            int offsetY = (int)((screenSize.Y - height * symbolSize.Y) / 2f);
 
             Position startPosition = Position.Zero;
             int w = 0;
@@ -55,12 +55,16 @@ namespace ConsoleAdventure.Graphics
                         {
                             BaseTransform baseTransform = TransformLoader.GetTransform(transform.Value.type);
 
-                            if (baseTransform.BackgroundColor.HasValue)
+                            Symbol symbol = baseTransform.GetSymbol(position, w);
+                            Color color = baseTransform.GetColor(position, w);
+                            Color? bgColor = baseTransform.GetBackgroundColor(position, w);
+
+                            if (bgColor.HasValue)
                             {
-                                ConsoleAdventure.SpriteBatch.DrawString(ConsoleAdventure.Font, "██", drawPosition, baseTransform.BackgroundColor.Value);
+                                ConsoleAdventure.SpriteBatch.DrawString(ConsoleAdventure.Font, "██", drawPosition, bgColor.Value);
                             }
 
-                            ConsoleAdventure.SpriteBatch.DrawString(ConsoleAdventure.Font, baseTransform.Symbol.Value, drawPosition, baseTransform.Color);
+                            ConsoleAdventure.SpriteBatch.DrawString(ConsoleAdventure.Font, symbol.Value, drawPosition, color);
                         }
                     }
 

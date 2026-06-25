@@ -1,4 +1,5 @@
 ﻿using ConsoleAdventure.Graphics;
+using ConsoleAdventure.Systems.WorldEngine;
 using ConsoleAdventure.Systems.WorldEngine.Objects;
 using Microsoft.Xna.Framework;
 
@@ -11,8 +12,8 @@ namespace ConsoleAdventure.GameContent.Transforms
             IsObstacle = true;
         }
 
-        public override Symbol Symbol => new Symbol("##");
+        public override Symbol GetSymbol(Position position, int w) => new Symbol("##");
 
-        public override Color Color => Color.White;
+        public override Color GetColor(Position position, int w) => Color.White;
     }
 }
