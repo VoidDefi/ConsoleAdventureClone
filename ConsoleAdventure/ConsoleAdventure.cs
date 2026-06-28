@@ -6,6 +6,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace ConsoleAdventure
@@ -80,6 +82,8 @@ namespace ConsoleAdventure
             base.Update(gameTime);
         }
 
+        private List<long> ticksHistory = new List<long>();
+
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
@@ -90,7 +94,17 @@ namespace ConsoleAdventure
 
             SpriteBatch.Begin();
 
-            string fps = $"FPS: {FPS}";
+            long milliseconds = WorldRenderer.RenderStopwatch.ElapsedMilliseconds;
+            long currentTicks = WorldRenderer.RenderStopwatch.ElapsedTicks;
+
+            ticksHistory.Add(currentTicks);
+
+            if (ticksHistory.Count > 30)
+                ticksHistory.RemoveAt(0);
+
+            long ticks = (long)ticksHistory.Average();
+
+            string fps = $"FPS: {FPS} | Render Time: {milliseconds}ms, {ticks}ticks";
             Vector2 fpsPosition = new Vector2(5, ScreenHeight - 18);
 
             SpriteBatch.DrawString(Font, new string('█', fps.Length), fpsPosition, Color.Black);

@@ -3,17 +3,15 @@ using ConsoleAdventure.Systems.WorldEngine;
 using ConsoleAdventure.Systems.WorldEngine.Chunks;
 using ConsoleAdventure.Systems.WorldEngine.Objects;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace ConsoleAdventure.Graphics
 {
     public static class WorldRenderer
     {
         private static Point symbolSize = new Point(18, 19);
+
+        internal static Stopwatch RenderStopwatch;
 
         public static void Draw()
         {
@@ -31,6 +29,9 @@ namespace ConsoleAdventure.Graphics
 
             Position startPosition = Position.Zero;
             int w = 0;
+
+            RenderStopwatch = new Stopwatch();
+            RenderStopwatch.Start();
 
             ConsoleAdventure.SpriteBatch.Begin();
 
@@ -76,6 +77,8 @@ namespace ConsoleAdventure.Graphics
             }
 
             ConsoleAdventure.SpriteBatch.End();
+
+            RenderStopwatch.Stop();
         }
     }
 }

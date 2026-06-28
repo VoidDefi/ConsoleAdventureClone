@@ -1,5 +1,4 @@
 ﻿using ConsoleAdventure.ModLoaderAPI.Exceptions;
-using ConsoleAdventure.ModLoaderAPI.Loaders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
