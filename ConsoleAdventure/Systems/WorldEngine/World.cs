@@ -1,4 +1,5 @@
-﻿using ConsoleAdventure.Systems.WorldEngine.Chunks;
+﻿using ConsoleAdventure.Systems.PlayerSystem;
+using ConsoleAdventure.Systems.WorldEngine.Chunks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,8 @@ namespace ConsoleAdventure.Systems.WorldEngine
 
         public string Name { get; private set; }
 
+        public Player[] Players { get; private set; }
+
         public World(int size, int seed, string name) 
         {
             if (size < 16) throw new ArgumentException("size value cannot be less than 16", nameof(size));
@@ -28,6 +31,22 @@ namespace ConsoleAdventure.Systems.WorldEngine
             Name = name;
 
             Chunks = new Chunk[Size, Size];
+
+            Players = new Player[1];
+            Players[0] = new Player();
+        }
+
+        public void Update()
+        {
+            PlayersUpdate();
+        }
+
+        private void PlayersUpdate()
+        {
+            for (int i = 0; i < Players.Length; i++)
+            {
+                Players[i].Update();
+            }
         }
 
         public Transform? GetTransform(int x, int y, int layer, int w)

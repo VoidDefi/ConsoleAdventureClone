@@ -28,7 +28,11 @@ namespace ConsoleAdventure.Systems.WorldEngine.Chunks
                 {
                     for (int j = 0; j < 16; j++)
                     {
-                        Transform transform = new Transform(0);
+                        Transform transform = new Transform();
+
+                        if (new Random().Next(0, 4) == 0)
+                            transform = new Transform(0);
+
                         chunk.SetTransform(i, j, 0, 0, transform);
                     }
                 }

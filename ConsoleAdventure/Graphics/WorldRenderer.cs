@@ -1,4 +1,5 @@
 ﻿using ConsoleAdventure.ModLoaderAPI.Loaders;
+using ConsoleAdventure.Systems.PlayerSystem;
 using ConsoleAdventure.Systems.WorldEngine;
 using ConsoleAdventure.Systems.WorldEngine.Chunks;
 using ConsoleAdventure.Systems.WorldEngine.Objects;
@@ -74,6 +75,31 @@ namespace ConsoleAdventure.Graphics
                         ConsoleAdventure.SpriteBatch.DrawString(ConsoleAdventure.Font, " ?", drawPosition, Color.Gray);
                     }
                 }
+            }
+
+            for (int i = 0; i < world.Players.Length; i++)
+            {
+                Player player = world.Players[i];
+
+                if (player == null || player.W != w) continue;
+
+                Position position = player.position;
+
+                if (position.X < 0 || position.X > world.Size) continue;
+                if (position.Y < 0 || position.Y > world.Size) continue;
+
+                Vector2 drawPosition = (position - startPosition).ToVector2() * symbolSize.ToVector2();
+
+                Symbol symbol = player.GetSymbol;
+                Color color = player.GetColor;
+                Color? bgColor = player.GetBackgroundColor;
+
+                if (bgColor.HasValue)
+                {
+                    ConsoleAdventure.SpriteBatch.DrawString(ConsoleAdventure.Font, "██", drawPosition, bgColor.Value);
+                }
+
+                ConsoleAdventure.SpriteBatch.DrawString(ConsoleAdventure.Font, symbol.Value, drawPosition, color);
             }
 
             ConsoleAdventure.SpriteBatch.End();

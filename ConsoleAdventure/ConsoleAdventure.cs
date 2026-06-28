@@ -1,5 +1,6 @@
 ﻿using ConsoleAdventure.Graphics;
 using ConsoleAdventure.ModLoaderAPI;
+using ConsoleAdventure.Systems.InputLogic;
 using ConsoleAdventure.Systems.WorldEngine;
 using ConsoleAdventure.Systems.WorldEngine.Chunks;
 using Microsoft.Xna.Framework;
@@ -77,6 +78,13 @@ namespace ConsoleAdventure
                 elapsedTime -= TimeSpan.FromSeconds(1);
                 FPS = frameCount;
                 frameCount = 0;
+            }
+
+            Input.Update(this);
+            
+            if (World != null)
+            {
+                World.Update();
             }
 
             base.Update(gameTime);
